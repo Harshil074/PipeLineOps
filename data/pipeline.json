@@ -1,0 +1,46 @@
+{
+  "stages": [
+    {
+      "id": 1,
+      "name": "Validate",
+      "desc": "Lint HTML/CSS/JS, check for broken links and malformed JSON",
+      "status": "success",
+      "tooling": ["HTMLHint", "Stylelint", "ESLint", "jsonlint"]
+    },
+    {
+      "id": 2,
+      "name": "Build",
+      "desc": "Inject build metadata, minify assets, assemble the dist artifact",
+      "status": "success",
+      "tooling": ["Node.js script", "actions/upload-artifact"]
+    },
+    {
+      "id": 3,
+      "name": "Test",
+      "desc": "Smoke-test rendered pages with a headless browser",
+      "status": "success",
+      "tooling": ["Playwright"]
+    },
+    {
+      "id": 4,
+      "name": "Security Scan",
+      "desc": "Scan for committed secrets and known-vulnerable dependencies",
+      "status": "success",
+      "tooling": ["Gitleaks", "npm audit"]
+    },
+    {
+      "id": 5,
+      "name": "Deploy",
+      "desc": "Publish the dist artifact to GitHub Pages",
+      "status": "success",
+      "tooling": ["actions/deploy-pages"]
+    },
+    {
+      "id": 6,
+      "name": "Verify",
+      "desc": "Hit the live URL, confirm 200 status and version match",
+      "status": "success",
+      "tooling": ["curl", "custom verify script"]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+/* =========================================================
+   PipeLineOps — responsive rules
+   ========================================================= */
+
+@media (max-width: 860px) {
+  .stage-tracker { flex-direction: column; }
+  .stage:not(:last-child) { border-right: 1px solid var(--panel-border); border-bottom: none; }
+  .stage:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  .stage:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+  .stage::after {
+    right: 50%;
+    top: auto;
+    bottom: -9px;
+    transform: translateX(50%) rotate(45deg);
+  }
+  .version-card { grid-template-columns: 1fr; text-align: left; }
+}
+
+@media (max-width: 720px) {
+  .main-nav {
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg);
+    border-bottom: 1px solid var(--panel-border);
+    padding: 8px;
+    display: none;
+  }
+  .main-nav.open { display: flex; }
+  .nav-toggle { display: inline-flex; }
+  .incident { grid-template-columns: 1fr; }
+  .incident-sev { padding-top: 0; }
+  .scan-row { grid-template-columns: 1fr; text-align: left; }
+}
+
+@media (max-width: 520px) {
+  .hero { padding: 40px 0 28px; }
+  section { padding: 32px 0; }
+  .card-grid { grid-template-columns: 1fr; }
+}

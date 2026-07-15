@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About the Pipeline · PipeLineOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/dashboard.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<script>window.PIPELINEOPS_DATA_ROOT = "../data/";</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container">
+    <div class="brand"><span class="dot"></span> PipeLineOps</div>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">menu</button>
+    <nav class="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="pipeline.html">CI/CD Stages</a>
+      <a href="security.html">Security</a>
+      <a href="cost.html">Cost</a>
+      <a href="incidents.html">Incidents</a>
+      <a href="deployment.html">Deployments</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:24px">
+    <div class="container">
+      <span class="eyebrow">// why this exists</span>
+      <h1>Not a product. A rehearsal.</h1>
+      <p class="lead">Most portfolio sites are the deliverable. Here, the site is deliberately simple —
+        the pipeline around it is the actual project.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>The problem with "I deployed a static site"</h3>
+          <p>Deploying a folder to a host proves you can click a button. It doesn't show whether you
+            catch a broken link before a user does, whether a leaked API key gets flagged, or whether
+            a bad deploy gets rolled back automatically.</p>
+        </div>
+        <div class="card">
+          <h3>What this project proves instead</h3>
+          <p>Every change to this site goes through validation, an automated build, a test pass,
+            a security scan, a deployment, and a post-deploy verification step — the same shape as
+            a real production release process, just scaled down.</p>
+        </div>
+        <div class="card">
+          <h3>Operational principles applied</h3>
+          <p>Fail fast on bad input, never deploy something untested, treat secrets scanning as
+            non-negotiable, verify the thing you shipped actually works in production, and log
+            every incident that slips through so the pipeline gets stricter over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// architecture</span>
+        <h2>How the pieces fit together</h2>
+      </div>
+      <div class="panel">
+        <div class="arch-diagram">
+          <div class="arch-node">Push to main</div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">GitHub Actions workflow</div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">6 sequential stages</div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">GitHub Pages</div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">Live site</div>
+        </div>
+      </div>
+      <p style="margin-top:16px">See the full breakdown, stage by stage, on the
+        <a href="pipeline.html">CI/CD Stages</a> page.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>PipeLineOps · built to learn CI/CD, not to sell anything</span>
+    <span><a href="../LICENSE">MIT License</a></span>
+  </div>
+</footer>
+
+<script src="../js/navigation.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/version.js"></script>
+</body>
+</html>

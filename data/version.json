@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "build_number": "0",
+  "commit_sha": "local-dev",
+  "branch": "main",
+  "built_at": "not yet built by pipeline",
+  "workflow_run_url": null,
+  "status": "pending",
+  "history": [
+    {
+      "version": "0.1.0",
+      "build_number": "0",
+      "commit_sha": "local-dev",
+      "environment": "production",
+      "date": "not yet deployed",
+      "status": "pending"
+    }
+  ]
+}

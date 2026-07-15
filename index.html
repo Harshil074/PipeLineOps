@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PipeLineOps — DevOps Production Pipeline Simulator</title>
+<meta name="description" content="A simulated production site wrapped in a real 6-stage GitHub Actions CI/CD pipeline: validation, build, test, security scan, deploy, verify." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>window.PIPELINEOPS_DATA_ROOT = "data/";</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <div class="brand"><span class="dot"></span> PipeLineOps <span data-build-status class="badge badge--success" style="margin-left:6px">success</span></div>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">menu</button>
+    <nav class="main-nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="pages/about.html">About</a>
+      <a href="pages/pipeline.html">CI/CD Stages</a>
+      <a href="pages/security.html">Security</a>
+      <a href="pages/cost.html">Cost</a>
+      <a href="pages/incidents.html">Incidents</a>
+      <a href="pages/deployment.html">Deployments</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">// devops production pipeline simulator</span>
+      <h1>A static site, run like it's on call.</h1>
+      <p class="lead">This isn't a company website — it's a small production system wrapped in a real
+        6-stage GitHub Actions pipeline: validation, build, automated tests, security scanning,
+        deployment, and post-deploy verification. Every page below is backed by data this pipeline
+        actually produces.</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="pages/pipeline.html">View the pipeline →</a>
+        <a class="btn btn--ghost" href="https://github.com" target="_blank" rel="noopener">View source on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// current run</span>
+        <h2>Pipeline stages</h2>
+        <p>Live status of the last workflow run, pulled from <code>data/pipeline.json</code>.</p>
+      </div>
+      <div class="stage-tracker" data-stage-tracker>
+        <p>Loading pipeline status…</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// explore</span>
+        <h2>What's in this project</h2>
+      </div>
+      <div class="card-grid">
+        <a class="card" href="pages/about.html">
+          <h3>About the Pipeline</h3>
+          <p>Why this project exists and the DevOps principles it's built around.</p>
+        </a>
+        <a class="card" href="pages/pipeline.html">
+          <h3>CI/CD Stages</h3>
+          <p>The 6 stages in detail, with the tooling behind each one.</p>
+        </a>
+        <a class="card" href="pages/security.html">
+          <h3>Security Checks</h3>
+          <p>Secret scanning and dependency auditing results from the last run.</p>
+        </a>
+        <a class="card" href="pages/cost.html">
+          <h3>Cost Optimization</h3>
+          <p>Practical ways this pipeline keeps CI minutes and hosting cheap.</p>
+        </a>
+        <a class="card" href="pages/incidents.html">
+          <h3>Incident Dashboard</h3>
+          <p>Sample production incidents this pipeline was built to catch earlier.</p>
+        </a>
+        <a class="card" href="pages/deployment.html">
+          <h3>Deployment History</h3>
+          <p>Every build's version, commit, and environment, logged automatically.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// build status</span>
+        <h2>Current build</h2>
+      </div>
+      <div class="panel version-card">
+        <div class="version-number" data-version>v0.0.0</div>
+        <div class="version-meta">
+          <div class="row"><span class="k">build</span><span class="v" data-build-number>#0</span></div>
+          <div class="row"><span class="k">commit</span><span class="v" data-commit-sha>—</span></div>
+          <div class="row"><span class="k">branch</span><span class="v" data-branch>—</span></div>
+          <div class="row"><span class="k">built at</span><span class="v" data-built-at>—</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>PipeLineOps · built to learn CI/CD, not to sell anything</span>
+    <span><a href="LICENSE">MIT License</a></span>
+  </div>
+</footer>
+
+<script src="js/navigation.js"></script>
+<script src="js/app.js"></script>
+<script src="js/version.js"></script>
+</body>
+</html>

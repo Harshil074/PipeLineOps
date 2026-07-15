@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deployment History · PipeLineOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/dashboard.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<script>window.PIPELINEOPS_DATA_ROOT = "../data/";</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container">
+    <div class="brand"><span class="dot"></span> PipeLineOps</div>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">menu</button>
+    <nav class="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="pipeline.html">CI/CD Stages</a>
+      <a href="security.html">Security</a>
+      <a href="cost.html">Cost</a>
+      <a href="incidents.html">Incidents</a>
+      <a href="deployment.html" aria-current="page">Deployments</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:24px">
+    <div class="container">
+      <span class="eyebrow">// stage 5 &amp; 6 output</span>
+      <h1>Deployment history</h1>
+      <p class="lead">Every deploy the pipeline has run, logged automatically from
+        <code>data/version.json</code> — no manual changelog to forget to update.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="panel" style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Build</th>
+              <th>Commit</th>
+              <th>Environment</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody data-deploy-history>
+            <tr><td colspan="6">Loading deployment history…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>PipeLineOps · built to learn CI/CD, not to sell anything</span>
+    <span><a href="../LICENSE">MIT License</a></span>
+  </div>
+</footer>
+
+<script src="../js/navigation.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/version.js"></script>
+</body>
+</html>

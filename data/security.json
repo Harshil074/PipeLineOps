@@ -1,0 +1,29 @@
+{
+  "last_scan": "2026-07-15",
+  "scans": [
+    {
+      "tool": "Gitleaks",
+      "purpose": "Detects secrets and credentials accidentally committed to the repo",
+      "findings": 0,
+      "status": "success"
+    },
+    {
+      "tool": "npm audit",
+      "purpose": "Flags known-vulnerable dependencies by severity",
+      "findings": 0,
+      "status": "success"
+    },
+    {
+      "tool": "HTMLHint / Stylelint",
+      "purpose": "Catches structural and syntax issues before they reach production",
+      "findings": 2,
+      "status": "warning"
+    },
+    {
+      "tool": "Dependabot",
+      "purpose": "Opens automated PRs when a dependency has a newer, patched version",
+      "findings": 1,
+      "status": "info"
+    }
+  ]
+}

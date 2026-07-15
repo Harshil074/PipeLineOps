@@ -1,0 +1,34 @@
+{
+  "incidents": [
+    {
+      "id": "INC-0042",
+      "title": "Deploy stage failed silently on Pages token expiry",
+      "severity": "sev2",
+      "date": "2026-05-11",
+      "duration": "38m",
+      "impact": "Site kept serving previous build; no user-facing downtime, but new content did not go live for 38 minutes before the alert fired.",
+      "root_cause": "GitHub Pages deployment token expired and the workflow did not fail loudly enough to page anyone.",
+      "resolution": "Added a post-deploy verification stage that diffs the live version.json against the build's version.json and fails the run on mismatch."
+    },
+    {
+      "id": "INC-0038",
+      "title": "Gitleaks false positive blocked an unrelated hotfix",
+      "severity": "sev3",
+      "date": "2026-04-02",
+      "duration": "15m",
+      "impact": "A one-line copy fix for the security page was blocked by the security-scan stage.",
+      "root_cause": "A sample API key in docs/security.md, used only as an illustrative example, matched a high-entropy string rule.",
+      "resolution": "Added an inline gitleaks:allow comment and a scoped .gitleaksignore entry for documentation examples."
+    },
+    {
+      "id": "INC-0031",
+      "title": "Build stage minified JSON data files, breaking dashboard fetch",
+      "severity": "sev2",
+      "date": "2026-02-19",
+      "duration": "1h 05m",
+      "impact": "Incident dashboard and version card rendered empty on production for just over an hour.",
+      "root_cause": "The build script's minifier globbed **/*.json, which unexpectedly caught runtime data files meant to be fetched as-is, not just config files meant for bundling.",
+      "resolution": "Scoped the minifier to css/js only and added a smoke test in the test stage that fetches each data file and asserts it parses."
+    }
+  ]
+}

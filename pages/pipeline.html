@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CI/CD Stages · PipeLineOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/dashboard.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<script>window.PIPELINEOPS_DATA_ROOT = "../data/";</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container">
+    <div class="brand"><span class="dot"></span> PipeLineOps</div>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">menu</button>
+    <nav class="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="pipeline.html" aria-current="page">CI/CD Stages</a>
+      <a href="security.html">Security</a>
+      <a href="cost.html">Cost</a>
+      <a href="incidents.html">Incidents</a>
+      <a href="deployment.html">Deployments</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:24px">
+    <div class="container">
+      <span class="eyebrow">// .github/workflows/pipeline.yml</span>
+      <h1>Six stages, in order, every push.</h1>
+      <p class="lead">Each stage only runs if the one before it passed. A red stage stops the
+        pipeline — nothing broken reaches production.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="stage-tracker" data-stage-tracker>
+        <p>Loading pipeline status…</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// stage detail</span>
+        <h2>What each stage actually does</h2>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <h3>1. Validate</h3>
+          <p>Lints every HTML, CSS, and JS file and confirms all four JSON data files parse
+            cleanly. Catches typos before they cost a build minute.</p>
+        </div>
+        <div class="card">
+          <h3>2. Build</h3>
+          <p>Writes the current commit SHA, build number, and timestamp into
+            <code>data/version.json</code>, then assembles everything into a single deployable
+            artifact.</p>
+        </div>
+        <div class="card">
+          <h3>3. Test</h3>
+          <p>Spins up a headless browser against the built artifact and checks that each page
+            loads, the nav renders, and the dashboards actually populate from JSON — not just
+            that the HTML is well-formed.</p>
+        </div>
+        <div class="card">
+          <h3>4. Security Scan</h3>
+          <p>Runs a secrets scanner across the diff and audits dependencies for known
+            vulnerabilities. This stage has no override — a real finding blocks the deploy.</p>
+        </div>
+        <div class="card">
+          <h3>5. Deploy</h3>
+          <p>Publishes the build artifact to GitHub Pages using the official deploy action —
+            no manual FTP, no "it works on my machine."</p>
+        </div>
+        <div class="card">
+          <h3>6. Verify</h3>
+          <p>Curls the live URL, confirms a 200 response, and checks that the deployed
+            <code>version.json</code> matches what was just built. If it doesn't, the run fails
+            loudly instead of quietly serving a stale site.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">// sample output</span>
+        <h2>What a passing run looks like</h2>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar"><span></span><span></span><span></span></div>
+        <div class="terminal-body">
+<span class="line-dim">$ gh workflow run pipeline.yml</span>
+✓ validate      html/css/js lint passed, 4/4 json files valid
+✓ build         version.json updated → build #47, commit a1b2c3d
+✓ test          6/6 pages rendered, 4/4 data fetches succeeded
+✓ security-scan gitleaks: 0 findings · npm audit: 0 high/critical
+✓ deploy        published to github pages
+✓ verify        https://&lt;user&gt;.github.io/PipeLineOps → 200, version match
+<span class="line-info">All stages passed. Total run time: 2m 14s.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>PipeLineOps · built to learn CI/CD, not to sell anything</span>
+    <span><a href="../LICENSE">MIT License</a></span>
+  </div>
+</footer>
+
+<script src="../js/navigation.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/version.js"></script>
+</body>
+</html>

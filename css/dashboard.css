@@ -1,0 +1,190 @@
+/* =========================================================
+   PipeLineOps — dashboard & pipeline visualization styles
+   ========================================================= */
+
+/* ---------- Signature element: the stage tracker ----------
+   A horizontal run of the 6 pipeline stages, styled like a
+   real CI run view. Order carries real information here
+   (stages execute in sequence), so numbering is earned. */
+
+.stage-tracker {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.stage {
+  flex: 1 1 0;
+  min-width: 150px;
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  padding: 16px 16px 16px 18px;
+}
+.stage:not(:last-child) { border-right: none; }
+.stage:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+.stage:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+
+.stage::after {
+  content: "";
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 14px; height: 14px;
+  background: var(--panel);
+  border-top: 1px solid var(--panel-border);
+  border-right: 1px solid var(--panel-border);
+  z-index: 2;
+}
+.stage:last-child::after { display: none; }
+
+.stage-num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  display: block;
+  margin-bottom: 8px;
+}
+.stage-name {
+  font-weight: 600;
+  color: var(--text-bright);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.stage-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  min-height: 32px;
+}
+
+.stage[data-status="success"] { border-top: 2px solid var(--status-success); }
+.stage[data-status="warning"] { border-top: 2px solid var(--status-warning); }
+.stage[data-status="fail"]    { border-top: 2px solid var(--status-fail); }
+.stage[data-status="running"] { border-top: 2px solid var(--status-running); }
+.stage[data-status="pending"] { border-top: 2px solid var(--panel-border); }
+
+.stage[data-status="success"]::after,
+.stage[data-status="pending"]::after { background: var(--panel); }
+
+@keyframes stage-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stage { animation: stage-in 0.4s ease backwards; }
+.stage:nth-child(1) { animation-delay: 0.03s; }
+.stage:nth-child(2) { animation-delay: 0.09s; }
+.stage:nth-child(3) { animation-delay: 0.15s; }
+.stage:nth-child(4) { animation-delay: 0.21s; }
+.stage:nth-child(5) { animation-delay: 0.27s; }
+.stage:nth-child(6) { animation-delay: 0.33s; }
+
+/* ---------- version card ---------- */
+.version-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.version-number {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  color: var(--status-success);
+  font-weight: 600;
+  line-height: 1;
+}
+.version-meta { display: grid; gap: 6px; font-size: 0.85rem; }
+.version-meta .row { display: flex; gap: 8px; }
+.version-meta .k { color: var(--text-faint); min-width: 110px; font-family: var(--font-mono); font-size: 0.78rem; }
+.version-meta .v { color: var(--text); font-family: var(--font-mono); }
+
+/* ---------- incident feed ---------- */
+.incident {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--panel-border);
+}
+.incident:last-child { border-bottom: none; }
+.incident-sev {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+.incident-sev--sev1 { color: var(--status-fail); }
+.incident-sev--sev2 { color: var(--status-warning); }
+.incident-sev--sev3 { color: var(--status-info); }
+.incident h4 { margin: 0 0 4px; color: var(--text-bright); font-size: 0.95rem; }
+.incident .meta { font-size: 0.78rem; color: var(--text-faint); font-family: var(--font-mono); }
+.incident .impact { font-size: 0.85rem; color: var(--text-dim); margin-top: 6px; }
+
+/* ---------- security scan list ---------- */
+.scan-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--panel-border);
+  font-size: 0.88rem;
+}
+.scan-row:last-child { border-bottom: none; }
+.scan-row .tool { font-family: var(--font-mono); color: var(--text-bright); }
+.scan-row .findings { color: var(--text-faint); font-size: 0.8rem; }
+
+/* ---------- deployment history table extras ---------- */
+.env-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--panel-hover);
+  color: var(--text-dim);
+  border: 1px solid var(--panel-border);
+}
+
+/* ---------- cost tips ---------- */
+.cost-tip {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--panel-border);
+}
+.cost-tip:last-child { border-bottom: none; }
+.cost-tip .save {
+  font-family: var(--font-mono);
+  color: var(--status-success);
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 90px;
+}
+
+/* ---------- architecture diagram (pure CSS) ---------- */
+.arch-diagram {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 24px;
+}
+.arch-node {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--text-bright);
+  text-align: center;
+}
+.arch-arrow {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
