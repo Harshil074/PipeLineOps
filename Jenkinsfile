@@ -1,11 +1,11 @@
 // Jenkinsfile
 // PipeLineOps CI/CD — 6 stages: validate, build, test, security scan,
-// deploy, verify. Runs Node-based steps inside a node:22 Docker agent;
-// deploy/verify steps use the amazon/aws-cli image since that's where
-// the AWS CLI already lives.
+// deploy, verify. Runs directly on the Jenkins built-in node (no
+// per-stage Docker containers) — Node.js, gitleaks, and the AWS CLI
+// are installed once on the Jenkins host itself.
 
 pipeline {
-  agent none
+  agent any
 
   options {
     // Same intent as the GitHub Actions concurrency group: don't let
@@ -28,7 +28,6 @@ pipeline {
     // data file is valid JSON.
     // ---------------------------------------------------------------
     stage('1 · Validate') {
-      agent { docker { image 'node:22' } }
       steps {
         sh '''
           npm install --no-save htmlhint stylelint stylelint-config-standard eslint
@@ -46,12 +45,9 @@ pipeline {
     // ---------------------------------------------------------------
     // Stage 2 — Build
     // Stamps this run's commit SHA, build number, and timestamp into
-    // data/version.json, then stashes the whole workspace so later
-    // stages (which run in different containers) work from the same
-    // built artifact.
+    // data/version.json.
     // ---------------------------------------------------------------
     stage('2 · Build') {
-      agent { docker { image 'node:22' } }
       steps {
         sh '''
           node -e "
@@ -84,7 +80,6 @@ pipeline {
             console.log(JSON.stringify(data, null, 2));
           "
         '''
-        stash name: 'site-build', includes: '**', excludes: '.git/**,node_modules/**'
       }
     }
 
@@ -94,12 +89,10 @@ pipeline {
     // headless browser, asserting each one loads.
     // ---------------------------------------------------------------
     stage('3 · Test') {
-      agent { docker { image 'node:22' } }
       steps {
-        unstash 'site-build'
         sh '''
           npm install --no-save playwright serve wait-on
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
           npx serve . -l 4173 &
           npx wait-on http://localhost:4173
           node -e "
@@ -129,9 +122,7 @@ pipeline {
     // Secrets scanning has no override: a real finding fails the build.
     // ---------------------------------------------------------------
     stage('4 · Security Scan') {
-      agent { docker { image 'zricethezav/gitleaks:latest'; args '--entrypoint=""' } }
       steps {
-        unstash 'site-build'
         sh 'gitleaks detect --source . --no-git -v'
       }
     }
@@ -142,13 +133,11 @@ pipeline {
     // ---------------------------------------------------------------
     stage('5 · Deploy') {
       when { branch 'main' }
-      agent { docker { image 'amazon/aws-cli'; args '--entrypoint=""' } }
       environment {
-  AWS_ACCESS_KEY_ID     = credentials('aws-jenkins-deploy-id')
-  AWS_SECRET_ACCESS_KEY = credentials('aws-jenkins-deploy-secret')
-}
+        AWS_ACCESS_KEY_ID     = credentials('aws-jenkins-deploy-id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-jenkins-deploy-secret')
+      }
       steps {
-        unstash 'site-build'
         sh '''
           aws s3 sync . "s3://${S3_BUCKET}" \
             --delete \
@@ -167,7 +156,6 @@ pipeline {
     // ---------------------------------------------------------------
     stage('6 · Verify') {
       when { branch 'main' }
-      agent { docker { image 'amazon/aws-cli'; args '--entrypoint=""' } }
       steps {
         sh '''
           for i in 1 2 3 4 5; do
