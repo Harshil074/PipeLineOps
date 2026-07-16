@@ -132,7 +132,7 @@ pipeline {
     // Syncs the built site to the S3 bucket. Only runs on main.
     // ---------------------------------------------------------------
     stage('5 · Deploy') {
-      when { branch 'main' }
+      when { expression { env.GIT_BRANCH == 'origin/main' } }
       environment {
         AWS_ACCESS_KEY_ID     = credentials('aws-jenkins-deploy-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-jenkins-deploy-secret')
@@ -155,7 +155,7 @@ pipeline {
     // just deployed, not a stale cached version.
     // ---------------------------------------------------------------
     stage('6 · Verify') {
-      when { branch 'main' }
+      when { expression { env.GIT_BRANCH == 'origin/main' } }
       steps {
         sh '''
           for i in 1 2 3 4 5; do
