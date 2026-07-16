@@ -33,8 +33,8 @@ pipeline {
         sh '''
           npm install --no-save htmlhint stylelint stylelint-config-standard eslint
           npx htmlhint "index.html" "pages/*.html"
-          npx stylelint "css/*.css" --config '{"extends":"stylelint-config-standard"}'
-          npx eslint js/*.js --no-eslintrc --env browser,es2021 --parser-options=ecmaVersion:2021
+          npx stylelint "css/*.css"
+          npx eslint js/*.js
           for f in data/*.json; do
             echo "Checking $f"
             node -e "JSON.parse(require('fs').readFileSync('$f'))"
