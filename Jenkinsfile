@@ -143,7 +143,7 @@ pipeline {
     stage('5 · Deploy') {
       when { branch 'main' }
       agent { docker { image 'amazon/aws-cli'; args '--entrypoint=""' } }
-      eenvironment {
+      environment {
   AWS_ACCESS_KEY_ID     = credentials('aws-jenkins-deploy-id')
   AWS_SECRET_ACCESS_KEY = credentials('aws-jenkins-deploy-secret')
 }
