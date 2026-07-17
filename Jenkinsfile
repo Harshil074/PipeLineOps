@@ -15,9 +15,9 @@ pipeline {
   }
 
   environment {
-    S3_BUCKET   = 'pipelineops-site'
-    AWS_REGION  = 'us-east-1'
-    SITE_URL    = "http://${S3_BUCKET}.s3-website-${AWS_REGION}.amazonaws.com/"
+    S3_BUCKET   = 'pipelineops-site-harshil74'
+    AWS_REGION  = 'ap-south-1'
+    SITE_URL    = "http://${S3_BUCKET}.s3-website.${AWS_REGION}.amazonaws.com/"
   }
 
   stages {
