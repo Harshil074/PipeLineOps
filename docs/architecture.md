@@ -6,10 +6,9 @@ PipeLineOps is deliberately split into two halves:
    run it locally. Pages fetch their content from JSON files in `data/` at
    runtime, rather than hardcoding it, so the pipeline has something real to
    update on every build.
-2. **The pipeline** — a GitHub Actions workflow (`.github/workflows/pipeline.yml`)
+2. **The pipeline** — a Jenkins pipeline (`Jenkinsfile`)
    that validates, builds, tests, scans, deploys, and verifies the site on
    every push to `main`.
-
 ## Why plain HTML/CSS/JS
 
 No framework or bundler means:
@@ -28,7 +27,7 @@ push to main
   -> build      (writes commit sha + build number into data/version.json)
   -> test       (headless browser hits every page, asserts data renders)
   -> security   (gitleaks + npm audit)
-  -> deploy     (publish to GitHub Pages)
+  -> deploy     (sync build to AWS S3 static hosting)
   -> verify     (curl the live URL, diff live version.json vs build's)
 ```
 

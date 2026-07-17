@@ -32,7 +32,7 @@
 <main id="main">
   <section class="hero" style="padding-bottom:24px">
     <div class="container">
-      <span class="eyebrow">// .github/workflows/pipeline.yml</span>
+      <span class="eyebrow">// Jenkinsfile</span>
       <h1>Six stages, in order, every push.</h1>
       <p class="lead">Each stage only runs if the one before it passed. A red stage stops the
         pipeline — nothing broken reaches production.</p>
@@ -78,8 +78,8 @@
         </div>
         <div class="card">
           <h3>5. Deploy</h3>
-          <p>Publishes the build artifact to GitHub Pages using the official deploy action —
-            no manual FTP, no "it works on my machine."</p>
+          <p>Syncs the build artifact to an AWS S3 bucket configured for static website
+            hosting — no manual FTP, no "it works on my machine."</p>
         </div>
         <div class="card">
           <h3>6. Verify</h3>
@@ -100,13 +100,13 @@
       <div class="terminal">
         <div class="terminal-bar"><span></span><span></span><span></span></div>
         <div class="terminal-body">
-<span class="line-dim">$ gh workflow run pipeline.yml</span>
+<span class="line-dim">$ Build #47 started by push to main</span>
 ✓ validate      html/css/js lint passed, 4/4 json files valid
 ✓ build         version.json updated → build #47, commit a1b2c3d
 ✓ test          6/6 pages rendered, 4/4 data fetches succeeded
 ✓ security-scan gitleaks: 0 findings · npm audit: 0 high/critical
-✓ deploy        published to github pages
-✓ verify        https://&lt;user&gt;.github.io/PipeLineOps → 200, version match
+✓ deploy        synced to s3://pipelineops-site-harshil74
+✓ verify        http://pipelineops-site-harshil74.s3-website.ap-south-1.amazonaws.com → 200, version match
 <span class="line-info">All stages passed. Total run time: 2m 14s.</span>
         </div>
       </div>

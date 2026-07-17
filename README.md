@@ -1,7 +1,7 @@
 # PipeLineOps
 
 A simulated production site, run the way a real one would be: every push goes
-through a 6-stage GitHub Actions pipeline — **validate → build → test →
+through a 6-stage Jenkins pipeline — **validate → build → test →
 security scan → deploy → verify** — before it reaches production.
 
 This is not a company website. It's a small, honest static site whose real
@@ -31,8 +31,8 @@ Then open `http://localhost:3000` (or whichever port your server prints).
 
 ## The pipeline
 
-Defined in `.github/workflows/pipeline.yml`. Each stage only runs if the
-previous one succeeded:
+Defined in `Jenkinsfile`, running on a self-hosted Jenkins instance. Each
+stage only runs if the previous one succeeded:
 
 | # | Stage | Tooling |
 |---|---|---|
@@ -40,17 +40,28 @@ previous one succeeded:
 | 2 | Build | Node script that stamps `data/version.json` |
 | 3 | Test | Playwright headless smoke tests |
 | 4 | Security Scan | Gitleaks, npm audit |
-| 5 | Deploy | `actions/deploy-pages` to GitHub Pages |
+| 5 | Deploy | `aws s3 sync` to an S3 static-hosting bucket |
 | 6 | Verify | curl + version match against the live site |
 
-## Setting it up on your own repo
+## Setting it up yourself
 
-1. Push this project to a GitHub repo.
-2. In **Settings → Pages**, set the source to "GitHub Actions."
-3. Push to `main` — the workflow runs automatically and deploys to
-   `https://<your-username>.github.io/<repo-name>/`.
-4. Watch the run under the **Actions** tab; each of the 6 jobs shows up as a
-   separate stage.
+1. Run Jenkins (Docker is the easiest route: `docker run -d -p 8080:8080
+   -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock
+   jenkins/jenkins:lts`).
+2. Create an S3 bucket with static website hosting enabled, plus a bucket
+   policy allowing public `s3:GetObject` reads.
+3. Create an IAM user scoped to just that bucket (`PutObject`,
+   `DeleteObject`, `ListBucket`), and add its access key as two Jenkins
+   credentials: `aws-jenkins-deploy-id` and `aws-jenkins-deploy-secret`.
+4. In Jenkins, create a **Pipeline** job → "Pipeline script from SCM" → point
+   it at this repo, branch `main`, script path `Jenkinsfile`.
+5. Update the `S3_BUCKET` / `AWS_REGION` values at the top of the
+   `Jenkinsfile` to match your own bucket.
+6. Hit **Build Now** — the stage view shows all 6 stages running live.
+
+See `docs/troubleshooting.md` for a full log of what actually went wrong
+setting this up and how each issue was fixed — genuinely useful if you're
+setting up something similar yourself.
 
 ## Why this exists
 

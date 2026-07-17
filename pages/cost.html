@@ -32,10 +32,11 @@
 <main id="main">
   <section class="hero" style="padding-bottom:24px">
     <div class="container">
-      <span class="eyebrow">// CI minutes aren't free at scale</span>
+      <span class="eyebrow">// self-hosted CI, metered hosting</span>
       <h1>Keeping the pipeline cheap</h1>
-      <p class="lead">This project runs entirely on GitHub's free tier, but the habits below are
-        the ones that matter once a pipeline runs hundreds of times a day.</p>
+      <p class="lead">Jenkins runs on my own machine, so there's no metered CI-minute bill — but
+        AWS S3 hosting is pay-as-you-go. The habits below are what actually matter once a pipeline
+        runs hundreds of times a day, on either kind of infrastructure.</p>
     </div>
   </section>
 
@@ -47,7 +48,8 @@
           <div>
             <h4>Cache dependencies between runs</h4>
             <p>Restoring a cached <code>node_modules</code> instead of reinstalling on every run
-              cuts several minutes off each workflow — real money at CI-minute scale.</p>
+              cuts several minutes off each build — time that adds up fast on a self-hosted
+              Jenkins node running many builds a day.</p>
           </div>
         </div>
         <div class="cost-tip">
@@ -59,11 +61,12 @@
           </div>
         </div>
         <div class="cost-tip">
-          <div class="save">Free hosting</div>
+          <div class="save">~$0/month</div>
           <div>
             <h4>Static hosting over a server</h4>
-            <p>GitHub Pages serves this entire site for free with no compute cost per request —
-              appropriate because nothing here needs a backend.</p>
+            <p>AWS S3 charges for storage and requests, not compute time — for a site this size
+              that works out to fractions of a cent, versus paying for an always-on server that
+              sits idle most of the day.</p>
           </div>
         </div>
         <div class="cost-tip">
@@ -75,11 +78,12 @@
           </div>
         </div>
         <div class="cost-tip">
-          <div class="save">No idle spend</div>
+          <div class="save">No wasted runs</div>
           <div>
             <h4>Concurrency limits</h4>
-            <p>New pushes to the same branch cancel the in-flight run for that branch, so pushing
-              three fixes in a row doesn't pay for three full pipeline runs.</p>
+            <p>Jenkins queues new builds instead of running them in parallel, so pushing three
+              fixes in a row runs them one after another rather than paying for three overlapping
+              pipeline runs competing for the same resources.</p>
           </div>
         </div>
       </div>

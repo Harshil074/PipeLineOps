@@ -2,7 +2,7 @@
 
 ## Done
 - Static site with 8 pages, all data-driven from `data/*.json`
-- 6-stage GitHub Actions pipeline: validate, build, test, security scan,
+- 6-stage Jenkins pipeline: validate, build, test, security scan,
   deploy, verify
 
 ## Next
