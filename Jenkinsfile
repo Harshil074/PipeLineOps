@@ -172,7 +172,7 @@ pipeline {
             fi
           done
 
-          LIVE_SHA=$(curl -s "${SITE_URL}data/version.json" | grep -o -m 1 '"commit_sha": *"[^"]*"' | sed -E 's/.*: *"([^"]*)"/\1/')
+          LIVE_SHA=$(curl -s "${SITE_URL}data/version.json" | grep -o -m 1 '"commit_sha": *"[^"]*"' | sed -E 's/.*: *"([^"]*)"/\\1/')
           EXPECTED_SHA=$(echo "${GIT_COMMIT}" | cut -c1-7)
           echo "Live: $LIVE_SHA  Expected: $EXPECTED_SHA"
           if [ "$LIVE_SHA" != "$EXPECTED_SHA" ]; then
